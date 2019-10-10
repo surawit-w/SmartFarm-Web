@@ -1,0 +1,27 @@
+body {
+  background: #9ec46f;
+}
+.App {
+  text-align: center;
+}
+.font {
+  font-family: "Ekkamai Standard";
+}
+.line-id {
+  text-align: center;
+  height: 2vh;
+  background: #dcdfe1;
+  font-family: "Ekkamai Standard";
+}
+.farmer-name {
+  text-align: center;
+  width: 20vw;
+  height: 2vh;
+  font-family: "Ekkamai Standard";
+}
+.farmer-phone {
+  text-align: center;
+  width: 20vw;
+  height: 2vh;
+  font-family: "Ekkamai Standard";
+}
