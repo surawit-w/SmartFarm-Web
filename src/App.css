@@ -46,3 +46,12 @@ body {
   font-family: "printable4uregular";
   width: 80%;
 }
+.button {
+  text-align: center;
+  margin-top: 15px;
+  padding: 15px;
+  background: #d68c45;
+  color: #000000;
+  font-family: "printable4uregular";
+  border-radius: 10px;
+}
