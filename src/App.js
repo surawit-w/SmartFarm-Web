@@ -2,8 +2,17 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { async } from "q";
+import { GET, POST } from "./service";
 
 const liff = window.liff;
+
+function SignIn(props) {
+  const { classes } = props;
+
+  // const [name] = useState("");
+  // const [tel] = useState("");
+  // const [id] = useState("");
+}
 
 export default class App extends Component {
   initialize() {
@@ -23,9 +32,11 @@ export default class App extends Component {
     super(props);
     this.state = {
       line_id: "",
-      // line_id: "U50240c7e4d230739b2a4343c4a1da542",
       line_pic: "",
-      loading: false
+      name: "",
+      tel: "",
+      loading: false,
+      user_info_arr: []
     };
     this.initialize = this.initialize.bind(this);
   }
@@ -35,48 +46,30 @@ export default class App extends Component {
     document.title = "Register";
   }
 
+  handleChange = async ({ target: { value, name } }) => {
+    await this.setState(
+      {
+        [name]: value
+      },
+      await console.log(this.state)
+    );
+  };
+
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     userLineID: "",
-  //     pictureUrl: ""
-  //   };
-  // }
-
-  // getProfile() {
-  //   liff.init(async () => {
-  //     let getProfile = await liff.getProfile();
-  //     this.setState({
-  //       userLineID: getProfile.userId,
-  //       pictureUrl: getProfile.pictureUrl
-  //     });
-  //   });
-  // }
-
-  // sendMessage() {
-  //   liff
-  //     .sendMessage([
-  //       {
-  //         type: "text",
-  //         text: "Hi LIFF"
-  //       }
-  //     ])
-  //     .then(() => {
-  //       liff.closeWindow();
-  //     });
-  // }
-
-  // clossLIFF() {
-  //   liff.closeWindow();
-  // }
+  sendInfo = async () => {
+    let name = this.state.name;
+    let tel = this.state.tel;
+    let lineId = this.state.line_id;
+    let test = await POST("/sendInfo", { name, tel, lineId });
+    console.log(test);
+    alert(test.status);
+  };
 
   render() {
-    const { line_id, loading, line_pic } = this.state;
+    const { line_id, loading, line_pic, name, tel } = this.state;
     return (
       <div class="App font">
         <h1>ลงทะเบียนเกษตรกรใหม่</h1>
@@ -91,10 +84,34 @@ export default class App extends Component {
         />
 
         <p>ชื่อเกษตรกร</p>
-        <input class="farmer-name" placeholder="ชื่อ-นามสกุล" type="text" />
+        <input
+          required
+          class="farmer-name"
+          placeholder="ชื่อ-นามสกุล"
+          type="text"
+          name="name"
+          value={name}
+          onChange={this.changeHandler}
+        />
         <p>เบอร์โทรศัพท์</p>
-        <input class="farmer-phone" placeholder="0803205554" maxLength="10" />
-        <button class="button">ลงทะเบียน</button>
+        <input
+          required
+          class="farmer-phone"
+          placeholder="กรอกเบอร์โทรศัพท์ที่นี่ค่ะ"
+          maxLength="10"
+          type="tel"
+          name="tel"
+          value={tel}
+          onChange={this.changeHandler}
+        />
+        <button
+          class="button"
+          type="submit"
+          id="submitBtn"
+          onClick={this.sendInfo}
+        >
+          ลงทะเบียน
+        </button>
       </div>
     );
   }
